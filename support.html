@@ -119,6 +119,15 @@
   }
   .sub button:hover { background: #5FC895; }
   .fine { font-size: 13px; color: #9AA3A6; margin: 0; }
+  .price {
+    font: 700 34px/1.1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #F4F7F7; margin: 0 0 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .cta {
+    display: inline-block; padding: 14px 30px; border-radius: 8px;
+    background: #50B686; color: #14181A; font-weight: 700; text-decoration: none;
+  }
+  .cta:hover { background: #5FC895; }
 
   footer {
     border-top: 1px solid #2A3134; margin-top: 64px; padding-top: 22px;
@@ -144,10 +153,11 @@
   </header>
   <nav><ul><li><a href="index.html">What this is</a></li><li><a href="method.html">Method</a></li><li><a href="data.html">Data</a></li><li><a href="results.html">What it scores</a></li><li><a href="support.html" aria-current="page">Support</a></li></ul></nav>
 
-  <h1>Why this needs support</h1>
+  <h1>What the subscription pays for</h1>
 
-  <p class="lede">The analysis is free to read and will stay free. The data
-  underneath it is not free, and that is the whole of the ask.</p>
+  <p class="lede">$15 a month, and this is where it goes. The results are
+  public and always will be — <a href="results.html">including the divisions
+  where the model has no edge</a>. The analysis is what costs money.</p>
 
   <h2>What it costs to run</h2>
 
@@ -171,7 +181,9 @@
   <h2>What it does not do</h2>
 
   <ul class="list">
-    <li><b>No advertising.</b> The reader is not the product.</li>
+    <li><b>No advertising.</b> The subscription is the whole business model,
+        which is the point: a reader who pays is the customer, and a reader who
+        does not is nobody's inventory.</li>
     <li><b>No affiliate arrangements.</b> There is nobody this project could
         send a reader to whose interests would not immediately contaminate
         what it says about a fixture.</li>
@@ -198,21 +210,21 @@
   result and kept, so that next year's version of this page can be judged
   against this year's claims rather than re-argued.</p>
 
-  <h2>Support it</h2>
+  <h2>Subscribe</h2>
 
-  <p>$15 a month, through Stripe. You get exactly what a free reader gets —
-  the same analysis, at the same hour, with nothing held back — because a
-  version that held something back would be a different product and this page
-  would have to say so.</p>
+  <p>$15 a month, through Stripe. Every subscriber gets the same document at
+  the same hour; there is no tier above this one and nothing is held back for
+  a version that costs more.</p>
 
-  <p><strong>Leaving the list and cancelling the payment are two separate
-  things</strong>, and it would be easy for this page to pretend otherwise. The
-  removal link at the bottom of every email stops the emails; it does not reach
-  Stripe. To stop being charged, use
-  <a href="https://billing.stripe.com/p/login/00wdR85cV2vb3SE93q1kA00">the payment portal</a> — the link is in every email
-  too, next to the other one.</p>
+  <p><strong>Cancelling is one act.</strong> Unsubscribe from any email and the
+  payment stops with it — the platform owns both, so there is no way to leave
+  the list and keep being charged, and no separate portal to remember. That was
+  worth paying an add-on for: the alternative was a page promising something
+  two disconnected systems could not deliver.</p>
 
-  <p><a href="https://buy.stripe.com/fZu8wO8p75HncpadjG1kA03"><strong>Support the work →</strong></a></p>
+  <p><a class="cta" href="https://buttondown.com/Sharperside/buy">Subscribe</a></p>
+
+  <p><a href="https://buttondown.com/Sharperside/buy"><strong>Support the work →</strong></a></p>
 
   <p class="fine">Payment is handled entirely by Stripe. No card details reach
   this project, and none are stored by it.</p>

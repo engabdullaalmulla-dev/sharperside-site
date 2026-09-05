@@ -119,6 +119,15 @@
   }
   .sub button:hover { background: #5FC895; }
   .fine { font-size: 13px; color: #9AA3A6; margin: 0; }
+  .price {
+    font: 700 34px/1.1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #F4F7F7; margin: 0 0 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .cta {
+    display: inline-block; padding: 14px 30px; border-radius: 8px;
+    background: #50B686; color: #14181A; font-weight: 700; text-decoration: none;
+  }
+  .cta:hover { background: #5FC895; }
 
   footer {
     border-top: 1px solid #2A3134; margin-top: 64px; padding-top: 22px;
@@ -148,7 +157,7 @@
 
   <p class="lede">Attack and defence ratings fitted to sixty-two thousand played
   matches, scored out of sample against the baselines that cost nothing, and
-  written up one fixture at a time — before noon, Gulf time, every day.</p>
+  written up one fixture at a time — before noon, Gulf time, every day. $15 a month.</p>
 
   <div class="figs two">
     <div class="fig"><div class="fig-v">+11.7%</div><div class="fig-l">better than the base rate on RPS</div><div class="fig-c">Across 20,754 out-of-sample forecasts in eight top divisions.</div></div>
@@ -192,23 +201,20 @@
   </ul>
 
   
-  <h2>Read it daily</h2>
+  <h2>Subscribe</h2>
 
-  <form class="sub" action="https://buttondown.email/api/emails/embed-subscribe/Sharperside" method="post" target="_blank">
-    <label class="vh" for="bd-email">Your email address</label>
-    <input id="bd-email" type="email" name="email" required
-           autocomplete="email" spellcheck="false" placeholder="you@example.com">
-    <button type="submit">Subscribe</button>
-  </form>
-  <p class="fine">Free. One confirmation email first — nothing arrives until you
-  have clicked the link in it. Every email carries a one-click removal link, and
-  your address is used to send you this and nothing else.</p>
+  <p class="price">$15 a month</p>
 
-  <h3>Or support the work</h3>
-  <p>$15 a month — the same analysis, and it keeps the data plan paid.
-  <a href="https://buy.stripe.com/fZu8wO8p75HncpadjG1kA03">Support it here</a>, and
-  <a href="https://billing.stripe.com/p/login/00wdR85cV2vb3SE93q1kA00">cancel whenever you like</a>.
-  <a href="support.html">What the money actually buys.</a></p>
+  <p>Every fixture the model can read, before noon, Gulf time, every day. There is no free tier and no
+  sample: the analysis is the product, and a version of it given away would be
+  the same document with a different name on it.</p>
+
+  <p><a class="cta" href="https://buttondown.com/Sharperside/buy">Subscribe</a></p>
+
+  <p class="fine">Payment is handled by Stripe — no card details reach this
+  project and none are stored by it. Cancelling is one act: unsubscribe from
+  any email and the payment stops with it. Your address is used to send you
+  this and nothing else.</p>
 
 
 
