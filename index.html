@@ -4,226 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Daily football analysis — Sharper Side</title>
-<meta name="description" content="Statistical analysis of the day&#x27;s football fixtures, scored out of sample. Probabilities, not predictions.">
+<meta name="description" content="Daily football match analysis, delivered to your email. Clear reasoning, team context and an honest review of results. Published for information only, not advice.">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&display=swap">
-<style>
-  *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: #14181A; color: #F4F7F7;
-    font: 16px/1.65 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px 88px; }
-  main.article { max-width: 760px; }
-
-  header {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 24px; flex-wrap: wrap; padding: 26px 0 22px;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; }
-  header .name {
-    font-weight: 800; font-size: 21px; letter-spacing: -.045em; white-space: nowrap;
-  }
-  nav ul {
-    display: flex; flex-wrap: wrap; gap: 4px 24px;
-    list-style: none; margin: 0; padding: 0;
-  }
-  nav a {
-    color: #9AA3A6; text-decoration: none; font-size: 14px;
-    padding: 4px 0; display: inline-block;
-  }
-  nav a:hover { color: #F4F7F7; }
-  nav a[aria-current="page"] { color: #50B686; font-weight: 700; }
-  nav a:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible {
-    outline: 2px solid #50B686; outline-offset: 4px; border-radius: 3px;
-  }
-  .rule { border-top: 1px solid #2A3134; margin-bottom: 52px; }
-
-  h1 {
-    font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -.05em;
-    font-weight: 800; margin: 0 0 22px; text-wrap: balance;
-  }
-  h1 em { font-style: normal; color: #50B686; }
-  h2 {
-    font-size: clamp(24px, 3vw, 31px); line-height: 1.16; letter-spacing: -.035em;
-    font-weight: 800; margin: 56px 0 16px; text-wrap: balance;
-  }
-  h3 {
-    font-size: 12px; letter-spacing: .13em; text-transform: uppercase;
-    color: #9AA3A6; font-weight: 700; margin: 40px 0 12px;
-  }
-  p { margin: 0 0 18px; }
-  .lede { font-size: 19px; line-height: 1.55; color: #9AA3A6; margin: 0 0 36px; }
-  a { color: #50B686; text-underline-offset: 4px; }
-  strong { font-weight: 700; }
-  em.term { font-style: italic; color: #F4F7F7; }
-  .list { padding-left: 20px; }
-  .list li { margin-bottom: 10px; }
-
-  /* A figure never appears without the caveat under it, and the caveat is not
-     set smaller than the number it qualifies. */
-  .figs { display: grid; gap: 34px; margin: 0 0 40px; }
-  .figs.two { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .fig-v {
-    font: 800 clamp(38px, 5vw, 54px)/1.02 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    letter-spacing: -.05em; color: #F4F7F7; font-variant-numeric: tabular-nums;
-  }
-  .fig-l { font-size: 14px; color: #F4F7F7; margin-top: 8px; font-weight: 700; }
-  .fig-c { font-size: 13.5px; color: #9AA3A6; margin-top: 8px; line-height: 1.55; }
-
-  .scroll { overflow-x: auto; margin: 0 0 26px; }
-  table { border-collapse: collapse; width: 100%; font-size: 14px; }
-  th, td {
-    text-align: left; padding: 11px 14px 11px 0;
-    border-bottom: 1px solid #2A3134; white-space: nowrap;
-  }
-  th {
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: #9AA3A6; font-weight: 700;
-  }
-  td.num, th.num {
-    text-align: right; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums;
-  }
-
-  .panel {
-    background: #171C1F; border: 1px solid #2A3134; border-radius: 10px;
-    padding: 22px; margin: 0 0 20px;
-  }
-  .panel .fix { font-weight: 700; margin-bottom: 6px; }
-  .dist {
-    display: flex; gap: 18px; font-size: 14px; color: #9AA3A6;
-    font-variant-numeric: tabular-nums;
-  }
-  .note { font-size: 13.5px; color: #9AA3A6; }
-  .fine { font-size: 13px; color: #9AA3A6; margin: 0; }
-  .price {
-    font: 800 40px/1.1 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing: -.045em; color: #F4F7F7;
-    margin: 0 0 14px; font-variant-numeric: tabular-nums;
-  }
-  .cta {
-    display: inline-block; padding: 14px 30px; border-radius: 8px;
-    background: #50B686; color: #14181A; font-weight: 700; text-decoration: none;
-  }
-  .cta:hover { background: #5FC895; }
-
-  footer {
-    border-top: 1px solid #2A3134; margin-top: 72px; padding-top: 24px;
-    font-size: 13px; line-height: 1.65; color: #9AA3A6;
-  }
-  footer strong { color: #F4F7F7; }
-  footer .links { margin-bottom: 16px; }
-  footer .links a { margin-right: 18px; }
-  .vh {
-    position: absolute; width: 1px; height: 1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap;
-  }
-
-  @media (max-width: 720px) {
-    .wrap { padding: 0 22px 64px; }
-    header { align-items: flex-start; }
-    .figs.two { grid-template-columns: 1fr; gap: 32px; }
-    h2 { margin-top: 44px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-  }
-</style>
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400&display=swap">
+<style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#14181A;color:#F4F7F7;font:16px/1.65 Archivo,Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-underline-offset:5px}a:focus-visible,summary:focus-visible{outline:2px solid #50B686;outline-offset:6px}a:hover{opacity:.8}.wrap{max-width:1200px;margin:auto;padding:0 32px}header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 0;border-bottom:1px solid #343b3e}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.6px;text-decoration:none;white-space:nowrap}.brand svg{width:38px;height:38px}nav{display:flex;gap:26px;align-items:center;flex-wrap:wrap;font-size:14px}nav a{text-decoration:none}nav [aria-current]{text-decoration:underline}.button{display:inline-block;background:#F4F7F7;color:#14181A;padding:14px 24px;text-decoration:none;font-weight:700;border:1px solid #F4F7F7;border-radius:3px}.button.secondary{background:transparent;color:#F4F7F7;border-color:#596166}.eyebrow{font-size:14px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:#9AA3A6;margin:0 0 24px}h1{font-size:clamp(44px,6.2vw,80px);line-height:1.06;font-weight:800;letter-spacing:-.05em;margin:0 0 26px}h2{font-size:clamp(30px,4vw,46px);line-height:1.15;letter-spacing:-.035em;margin:0 0 22px}h3{font-size:22px;line-height:1.3;margin:0 0 14px}p{margin:0 0 20px}.lead{font-size:20px;color:#9AA3A6;max-width:620px}.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;padding:84px 0 76px;align-items:center}.actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:30px 0 20px}.small{font-size:14px;color:#9AA3A6}.serif{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:26px;font-weight:400}.edition{border:1px solid #465054;padding:30px;background:#191e20;box-shadow:16px 16px 0 #101416}.edition-top{display:flex;justify-content:space-between;border-bottom:1px solid #465054;padding-bottom:18px;margin-bottom:24px;font-size:14px}.edition h3{font-size:28px}.edition .row{border-top:1px solid #343b3e;padding-top:16px;margin-top:22px}.rule{border-top:1px solid #343b3e;padding:64px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:42px}.number{font-size:14px;color:#9AA3A6;margin-bottom:24px}.muted{color:#9AA3A6}.split{display:grid;grid-template-columns:1fr 1fr;gap:72px}.price{font-size:70px;line-height:1.2;letter-spacing:-.04em;font-weight:700;font-variant-numeric:tabular-nums}.price span{font-size:16px;letter-spacing:0;color:#9AA3A6;font-weight:400}.ticks{padding-left:20px}.ticks li{padding:7px 0}.faq{max-width:850px}details{border-top:1px solid #343b3e;padding:20px 0}summary{cursor:pointer;font-weight:600;font-size:18px}details p{margin:18px 0 0;color:#9AA3A6}.notice{border:1px solid #465054;padding:26px;margin-bottom:40px}.notice h3{font-size:20px}.notice p{margin:0;color:#9AA3A6}.article{max-width:860px;padding:70px 0}.article h1{font-size:clamp(40px,5vw,62px)}.article h2{font-size:28px;margin-top:40px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:14px;border-bottom:1px solid #343b3e;font-size:14px}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}footer{padding:36px 0;color:#9AA3A6;border-top:1px solid #343b3e;font-size:14px}.footer-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}.footer-links{display:flex;gap:24px;flex-wrap:wrap}.delivery{font-variant-numeric:tabular-nums}@media(max-width:800px){header{align-items:flex-start;flex-direction:column;gap:18px}nav{gap:18px}.hero,.split{grid-template-columns:1fr;gap:38px}.hero{padding:48px 0}.grid{grid-template-columns:1fr;gap:30px}.wrap{padding:0 22px}.edition{box-shadow:8px 8px 0 #101416}.rule{padding:42px 0}.article{padding:42px 0}.price{font-size:60px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}.fig-v{font-size:clamp(42px,5vw,62px);font-weight:800;letter-spacing:-.045em;line-height:1.05;font-variant-numeric:tabular-nums}.fig-l{font-size:15px;font-weight:700;margin-top:10px}.fig-c{font-size:14px;color:#9AA3A6;margin-top:10px;max-width:44ch}.fig{min-width:0}.figs{display:grid;grid-template-columns:1fr 1fr;gap:48px;border-top:1px solid #343b3e;padding:60px 0}.article .figs{border-top:0;padding:24px 0 44px}@media(max-width:800px){.figs{grid-template-columns:1fr;gap:34px;padding:40px 0}}</style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <span class="brand"><svg width="30" height="30" viewBox="0 0 64 64" style="opacity:1.0;display:block;"><path d="M4,12 L24,32 L4,52 Z" fill="#6B7478"/><path d="M30,20 L62,32 L30,44 Z" fill="#50B686"/></svg>
-    <span class="name">Sharper Side</span></span>
-    <nav><ul><li><a href="index.html" aria-current="page">What this is</a></li><li><a href="method.html">Method</a></li><li><a href="data.html">Data</a></li><li><a href="results.html">What it scores</a></li><li><a href="support.html">Support</a></li></ul></nav>
-  </header>
-  <div class="rule"></div>
+<header><a class="brand" href="index.html" aria-label="Sharper Side home">
+<svg width="30" height="30" viewBox="0 0 64 64" style="opacity:1.0;display:block;"><path d="M4,12 L24,32 L4,52 Z" fill="#6B7478"/><path d="M30,20 L62,32 L30,44 Z" fill="#50B686"/></svg>Sharper Side</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page" aria-current="page">Overview</a><a href="method.html">Our approach</a><a href="results.html">Our record</a><a href="support.html">Help</a><a href="unsubscribe.html">Unsubscribe</a></nav></header>
 <main>
-
-  <h1>The day's football, read as <em>probabilities</em> rather than results.</h1>
-
-  <p class="lede">Attack and defence ratings fitted to sixty-two thousand played
-  matches, scored out of sample against the baselines that cost nothing, and
-  written up one fixture at a time — before noon, Gulf time, every day. $15 a month.</p>
-
-  <div class="figs two">
-    <div class="fig"><div class="fig-v">+11.7%</div><div class="fig-l">better than the base rate on RPS</div><div class="fig-c">Across 20,754 out-of-sample forecasts in seven top divisions and the Championship.</div></div>
-    <div class="fig"><div class="fig-v">+8.6%</div><div class="fig-l">across all twenty evaluable competitions</div><div class="fig-c">The more honest number, and the one to judge it by. The gap between the two is the finding.</div></div>
-  </div>
-
-  <p>A model worth having in a top division is close to worthless in a fourth
-  tier, and both facts belong on the same page. England's League Two gains
-  <strong>+0.89%</strong> — no practical edge, and it is still forecast, still
-  scored, and still reported as such.</p>
-
-  <h2>What arrives</h2>
-
-  <div class="panel">
-    <div class="fix">Rovers v Athletic</div>
-    <div class="dist"><span>Home <b>54%</b></span><span>Draw <b>25%</b></span>
-    <span>Away <b>21%</b></span></div>
-  </div>
-
-  <p>Three percentages that add to a hundred, then what moved them. A side rated
-  54% loses or draws almost half the time, so the strongest outcome is named as
-  the strongest <em class="term">reading</em> and never as a result. Where the
-  data does not separate two teams, that is reported as the finding rather than
-  resolved into a name.</p>
-
-  <p>Each fixture also carries the case <em class="term">against</em> its own
-  strongest reading wherever recent form contradicts it. An analyst who lists
-  only the supporting facts is not analysing, and a reader who spots the
-  contradiction unaided is right to stop trusting the rest.</p>
-
-  <h3>Every day, in the inbox</h3>
-  <ul class="list">
-    <li><b>Every fixture the model can read</b>, with the full distribution
-        rather than a pick.</li>
-    <li><b>What the model used, kept apart from what it merely checked.</b>
-        Head-to-head and team news are the second group — running them together
-        reads as one argument when only half is in the number.</li>
-    <li><b>Who is missing</b>, and what the absence is measured to cost.</li>
-    <li><b>Yesterday scored.</b> Every forecast is settled against the result
-        and the record is public, including the days it was wrong.</li>
-  </ul>
-
-  
-  <h2>Subscribe</h2>
-
-  <p class="price">$15 a month</p>
-
-  <p>Every fixture the model can read, before noon, Gulf time, every day. There is no free tier and no
-  sample: the analysis is the product, and a version of it given away would be
-  the same document with a different name on it.</p>
-
-  <p><a class="cta" href="https://buttondown.com/Sharperside/buy">Subscribe</a></p>
-
-  <p class="fine">Payment is handled by Stripe — no card details reach this
-  project and none are stored by it. Cancelling is one act: unsubscribe from
-  any email and the payment stops with it. Your address is used to send you
-  this and nothing else.</p>
-
-
+<section class="hero"><div><p class="eyebrow">The daily football briefing</p><h1>Read the game.<br>Before kick-off.</h1><p class="lead">The day's football, explained. Match analysis, the reasons behind each reading, and the team news that matters — delivered straight to your inbox.</p><div class="actions"><a class="button" href="https://buttondown.com/Sharperside/buy">Subscribe — $15 a month</a><a href="#inside">What’s included</a></div><p class="small">One daily email · Cancel anytime<br>Sent at <span class="delivery" data-delivery>8 am BST / 7 am GMT, London time</span></p></div><aside class="edition" aria-label="An outline of the daily email"><div class="edition-top"><strong>SHARPER SIDE</strong><span>Daily edition</span></div><p class="eyebrow">Inside your briefing</p><h3>The fixture.<br>The reading.<br>The reasons.</h3><p class="muted">Who looks stronger, what supports that view, and what could change the picture.</p><div class="row"><strong>Before the match</strong><br><span class="small">Form · Attack &amp; defence · Absences</span></div><div class="row"><strong>The morning after</strong><br><span class="small">The original reading beside the result. Including the misses.</span></div><p class="small" style="margin:24px 0 0">Briefing outline — no live match data shown.</p></aside></section><section class="figs"><div class="fig"><div class="fig-v">+11.7%</div><div class="fig-l">better than the base rate on RPS</div><div class="fig-c">Across 20,754 out-of-sample forecasts in seven top divisions and the Championship.</div></div><div class="fig"><div class="fig-v">+8.6%</div><div class="fig-l">across all twenty evaluable competitions</div><div class="fig-c">The more honest number, and the one to judge it by. The gap between the two is the finding.</div></div></section><section id="inside" class="rule"><p class="eyebrow">What your subscription includes</p><h2>More context for every match.</h2><div class="grid"><div><p class="number">01 / THE READING</p><h3>A clear view of the fixture</h3><p class="muted">Understand which side looks stronger and why. When there is little between two teams, we say so.</p></div><div><p class="number">02 / THE REASONS</p><h3>The detail behind the view</h3><p class="muted">Attacking and defensive strength, home and away form, and available team news. Supporting evidence and reasons for caution, together.</p></div><div><p class="number">03 / THE FOLLOW-THROUGH</p><h3>Yesterday, checked</h3><p class="muted">Each reading is reviewed against the final result. The days we get it wrong belong in the record too.</p></div></div></section><section class="rule split"><div><p class="eyebrow">An honest reading</p><h2>Football is uncertain.<br>The analysis should say so.</h2><p class="lead">A stronger side can lose. A close match can finish one-sided. We explain what the evidence suggests, without pretending the result is settled.</p><a href="method.html">Read our approach</a></div><div><p class="serif">The match, read honestly.</p><p class="muted">No exaggerated promises. No selective celebration of the good days. Just the reasoning before the match and an honest account afterwards.</p><a href="results.html">See the published record</a></div></section><section id="subscribe" class="rule split"><div><p class="eyebrow">Your daily subscription</p><h2>One briefing.<br>The whole picture.</h2><p class="muted">Every covered fixture in one email. No extra tier to unlock the full analysis.</p></div><div><p class="price">$15 a month</p><ul class="ticks"><li>Daily football match analysis</li><li>Team context and the reasoning behind each reading</li><li>A review of the previous day's results</li><li>Delivery at <span data-delivery>8 am BST / 7 am GMT, London time</span></li></ul><div class="actions"><a class="button" href="https://buttondown.com/Sharperside/buy">Start my subscription</a></div><p class="small">Billed monthly through Stripe. Renews until cancelled.<br><a href="unsubscribe.html">Unsubscribe or cancel your subscription</a>.</p></div></section><section class="rule faq"><p class="eyebrow">Before you subscribe</p><h2>A few useful answers.</h2><details><summary>When will my email arrive?</summary><p>We send the daily briefing at 8 am London time during British Summer Time and 7 am during GMT. The website displays the current London delivery time. Email arrival can vary slightly by provider.</p></details><details><summary>Which matches are included?</summary><p>The briefing covers fixtures for which sufficient data is available. Coverage varies with the day's schedule and available information. <a href="data.html">See coverage and sources</a>.</p></details><details><summary>Is this a tipping service?</summary><p>No. Your subscription pays for statistical analysis of football fixtures. Nothing in it is advice or a recommendation to act, and no forecast is a statement about what will happen.</p></details><details><summary>How do I unsubscribe or stop paying?</summary><p>Use the Unsubscribe link at the bottom of a Sharper Side email to leave the newsletter and stop future recurring payments. If you cannot find an email, <a href="unsubscribe.html">follow the cancellation help here</a>.</p></details></section>
 </main>
-
-  <footer>
-    <div class="links">
-      <a href="method.html">Method</a><a href="data.html">Data</a>
-      <a href="results.html">What it scores</a><a href="support.html">Support</a>
-    </div>
-    <strong>Disclaimer.</strong> Sharper Side is statistical analysis of
-    football fixtures, published for information only. It is not advice of any
-    kind and nothing in it is a recommendation to act, financially or
-    otherwise. Football is uncertain and no forecast here is a statement about
-    what will happen. No responsibility is accepted for any decision taken on
-    the basis of this analysis, or for any loss arising from one.
-  </footer>
+<aside class="notice"><h3>Analysis, not advice.</h3><p>Sharper Side is statistical analysis of football fixtures, published for information only. It is not advice of any kind and nothing in it is a recommendation to act, financially or otherwise. Football is uncertain, and no forecast here is a statement about what will happen.</p></aside>
+<footer><div class="footer-row"><span>Sharper Side<br><span class="serif">The match, read honestly.</span></span><div class="footer-links"><a href="data.html">Coverage &amp; sources</a><a href="support.html">Help &amp; contact</a><a href="unsubscribe.html">Unsubscribe / cancel</a></div></div><p>Daily delivery: <span data-delivery>8 am BST / 7 am GMT, London time</span>. London time adjusts with the clocks.</p><p>© 2026 Sharper Side · Football analysis for information only.</p></footer>
 </div>
+<script>document.querySelectorAll('[data-delivery]').forEach(function(el){var d=new Date(),u=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),7));el.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'numeric',minute:'2-digit',hour12:true}).format(u)+' London time';});</script>
 </body>
 </html>

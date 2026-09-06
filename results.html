@@ -3,215 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>What it scores — Sharper Side</title>
-<meta name="description" content="Out-of-sample RPS by competition against the base rate, and the divisions where the model has no edge.">
+<title>Our record — Sharper Side</title>
+<meta name="description" content="Daily football match analysis, delivered to your email. Clear reasoning, team context and an honest review of results. Published for information only, not advice.">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&display=swap">
-<style>
-  *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: #14181A; color: #F4F7F7;
-    font: 16px/1.65 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px 88px; }
-  main.article { max-width: 760px; }
-
-  header {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 24px; flex-wrap: wrap; padding: 26px 0 22px;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; }
-  header .name {
-    font-weight: 800; font-size: 21px; letter-spacing: -.045em; white-space: nowrap;
-  }
-  nav ul {
-    display: flex; flex-wrap: wrap; gap: 4px 24px;
-    list-style: none; margin: 0; padding: 0;
-  }
-  nav a {
-    color: #9AA3A6; text-decoration: none; font-size: 14px;
-    padding: 4px 0; display: inline-block;
-  }
-  nav a:hover { color: #F4F7F7; }
-  nav a[aria-current="page"] { color: #50B686; font-weight: 700; }
-  nav a:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible {
-    outline: 2px solid #50B686; outline-offset: 4px; border-radius: 3px;
-  }
-  .rule { border-top: 1px solid #2A3134; margin-bottom: 52px; }
-
-  h1 {
-    font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -.05em;
-    font-weight: 800; margin: 0 0 22px; text-wrap: balance;
-  }
-  h1 em { font-style: normal; color: #50B686; }
-  h2 {
-    font-size: clamp(24px, 3vw, 31px); line-height: 1.16; letter-spacing: -.035em;
-    font-weight: 800; margin: 56px 0 16px; text-wrap: balance;
-  }
-  h3 {
-    font-size: 12px; letter-spacing: .13em; text-transform: uppercase;
-    color: #9AA3A6; font-weight: 700; margin: 40px 0 12px;
-  }
-  p { margin: 0 0 18px; }
-  .lede { font-size: 19px; line-height: 1.55; color: #9AA3A6; margin: 0 0 36px; }
-  a { color: #50B686; text-underline-offset: 4px; }
-  strong { font-weight: 700; }
-  em.term { font-style: italic; color: #F4F7F7; }
-  .list { padding-left: 20px; }
-  .list li { margin-bottom: 10px; }
-
-  /* A figure never appears without the caveat under it, and the caveat is not
-     set smaller than the number it qualifies. */
-  .figs { display: grid; gap: 34px; margin: 0 0 40px; }
-  .figs.two { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .fig-v {
-    font: 800 clamp(38px, 5vw, 54px)/1.02 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    letter-spacing: -.05em; color: #F4F7F7; font-variant-numeric: tabular-nums;
-  }
-  .fig-l { font-size: 14px; color: #F4F7F7; margin-top: 8px; font-weight: 700; }
-  .fig-c { font-size: 13.5px; color: #9AA3A6; margin-top: 8px; line-height: 1.55; }
-
-  .scroll { overflow-x: auto; margin: 0 0 26px; }
-  table { border-collapse: collapse; width: 100%; font-size: 14px; }
-  th, td {
-    text-align: left; padding: 11px 14px 11px 0;
-    border-bottom: 1px solid #2A3134; white-space: nowrap;
-  }
-  th {
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: #9AA3A6; font-weight: 700;
-  }
-  td.num, th.num {
-    text-align: right; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums;
-  }
-
-  .panel {
-    background: #171C1F; border: 1px solid #2A3134; border-radius: 10px;
-    padding: 22px; margin: 0 0 20px;
-  }
-  .panel .fix { font-weight: 700; margin-bottom: 6px; }
-  .dist {
-    display: flex; gap: 18px; font-size: 14px; color: #9AA3A6;
-    font-variant-numeric: tabular-nums;
-  }
-  .note { font-size: 13.5px; color: #9AA3A6; }
-  .fine { font-size: 13px; color: #9AA3A6; margin: 0; }
-  .price {
-    font: 800 40px/1.1 Archivo, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing: -.045em; color: #F4F7F7;
-    margin: 0 0 14px; font-variant-numeric: tabular-nums;
-  }
-  .cta {
-    display: inline-block; padding: 14px 30px; border-radius: 8px;
-    background: #50B686; color: #14181A; font-weight: 700; text-decoration: none;
-  }
-  .cta:hover { background: #5FC895; }
-
-  footer {
-    border-top: 1px solid #2A3134; margin-top: 72px; padding-top: 24px;
-    font-size: 13px; line-height: 1.65; color: #9AA3A6;
-  }
-  footer strong { color: #F4F7F7; }
-  footer .links { margin-bottom: 16px; }
-  footer .links a { margin-right: 18px; }
-  .vh {
-    position: absolute; width: 1px; height: 1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap;
-  }
-
-  @media (max-width: 720px) {
-    .wrap { padding: 0 22px 64px; }
-    header { align-items: flex-start; }
-    .figs.two { grid-template-columns: 1fr; gap: 32px; }
-    h2 { margin-top: 44px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-  }
-</style>
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400&display=swap">
+<style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#14181A;color:#F4F7F7;font:16px/1.65 Archivo,Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-underline-offset:5px}a:focus-visible,summary:focus-visible{outline:2px solid #50B686;outline-offset:6px}a:hover{opacity:.8}.wrap{max-width:1200px;margin:auto;padding:0 32px}header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 0;border-bottom:1px solid #343b3e}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.6px;text-decoration:none;white-space:nowrap}.brand svg{width:38px;height:38px}nav{display:flex;gap:26px;align-items:center;flex-wrap:wrap;font-size:14px}nav a{text-decoration:none}nav [aria-current]{text-decoration:underline}.button{display:inline-block;background:#F4F7F7;color:#14181A;padding:14px 24px;text-decoration:none;font-weight:700;border:1px solid #F4F7F7;border-radius:3px}.button.secondary{background:transparent;color:#F4F7F7;border-color:#596166}.eyebrow{font-size:14px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:#9AA3A6;margin:0 0 24px}h1{font-size:clamp(44px,6.2vw,80px);line-height:1.06;font-weight:800;letter-spacing:-.05em;margin:0 0 26px}h2{font-size:clamp(30px,4vw,46px);line-height:1.15;letter-spacing:-.035em;margin:0 0 22px}h3{font-size:22px;line-height:1.3;margin:0 0 14px}p{margin:0 0 20px}.lead{font-size:20px;color:#9AA3A6;max-width:620px}.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;padding:84px 0 76px;align-items:center}.actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:30px 0 20px}.small{font-size:14px;color:#9AA3A6}.serif{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:26px;font-weight:400}.edition{border:1px solid #465054;padding:30px;background:#191e20;box-shadow:16px 16px 0 #101416}.edition-top{display:flex;justify-content:space-between;border-bottom:1px solid #465054;padding-bottom:18px;margin-bottom:24px;font-size:14px}.edition h3{font-size:28px}.edition .row{border-top:1px solid #343b3e;padding-top:16px;margin-top:22px}.rule{border-top:1px solid #343b3e;padding:64px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:42px}.number{font-size:14px;color:#9AA3A6;margin-bottom:24px}.muted{color:#9AA3A6}.split{display:grid;grid-template-columns:1fr 1fr;gap:72px}.price{font-size:70px;line-height:1.2;letter-spacing:-.04em;font-weight:700;font-variant-numeric:tabular-nums}.price span{font-size:16px;letter-spacing:0;color:#9AA3A6;font-weight:400}.ticks{padding-left:20px}.ticks li{padding:7px 0}.faq{max-width:850px}details{border-top:1px solid #343b3e;padding:20px 0}summary{cursor:pointer;font-weight:600;font-size:18px}details p{margin:18px 0 0;color:#9AA3A6}.notice{border:1px solid #465054;padding:26px;margin-bottom:40px}.notice h3{font-size:20px}.notice p{margin:0;color:#9AA3A6}.article{max-width:860px;padding:70px 0}.article h1{font-size:clamp(40px,5vw,62px)}.article h2{font-size:28px;margin-top:40px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:14px;border-bottom:1px solid #343b3e;font-size:14px}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}footer{padding:36px 0;color:#9AA3A6;border-top:1px solid #343b3e;font-size:14px}.footer-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}.footer-links{display:flex;gap:24px;flex-wrap:wrap}.delivery{font-variant-numeric:tabular-nums}@media(max-width:800px){header{align-items:flex-start;flex-direction:column;gap:18px}nav{gap:18px}.hero,.split{grid-template-columns:1fr;gap:38px}.hero{padding:48px 0}.grid{grid-template-columns:1fr;gap:30px}.wrap{padding:0 22px}.edition{box-shadow:8px 8px 0 #101416}.rule{padding:42px 0}.article{padding:42px 0}.price{font-size:60px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}.fig-v{font-size:clamp(42px,5vw,62px);font-weight:800;letter-spacing:-.045em;line-height:1.05;font-variant-numeric:tabular-nums}.fig-l{font-size:15px;font-weight:700;margin-top:10px}.fig-c{font-size:14px;color:#9AA3A6;margin-top:10px;max-width:44ch}.fig{min-width:0}.figs{display:grid;grid-template-columns:1fr 1fr;gap:48px;border-top:1px solid #343b3e;padding:60px 0}.article .figs{border-top:0;padding:24px 0 44px}@media(max-width:800px){.figs{grid-template-columns:1fr;gap:34px;padding:40px 0}}</style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <span class="brand"><svg width="30" height="30" viewBox="0 0 64 64" style="opacity:1.0;display:block;"><path d="M4,12 L24,32 L4,52 Z" fill="#6B7478"/><path d="M30,20 L62,32 L30,44 Z" fill="#50B686"/></svg>
-    <span class="name">Sharper Side</span></span>
-    <nav><ul><li><a href="index.html">What this is</a></li><li><a href="method.html">Method</a></li><li><a href="data.html">Data</a></li><li><a href="results.html" aria-current="page">What it scores</a></li><li><a href="support.html">Support</a></li></ul></nav>
-  </header>
-  <div class="rule"></div>
-<main class="article">
-
-  <h1>What it scores, including where it fails</h1>
-
-  <p class="lede">Every forecast below was made before the match and scored
-  after it, against two baselines that cost nothing to compute: the division's
-  own base rate, and a uniform guess.</p>
-
-  <div class="figs two">
-    <div class="fig"><div class="fig-v">+11.7%</div><div class="fig-l">on RPS, eight leagues</div><div class="fig-c">20,754 out-of-sample forecasts across seven top divisions and the Championship. This is the flattering figure.</div></div>
-    <div class="fig"><div class="fig-v">+3.03%</div><div class="fig-l">second tiers and below</div><div class="fig-c">The same model, the same method, on lower divisions. t = 7.50, p = 1.3e-06 — the difference is real, not noise.</div></div>
-  </div>
-
-  <p>Ranked-probability score against the base rate, by competition. RPS is used
-  rather than accuracy because the outcomes are ordered — being wrong by a draw
-  is not the same as being wrong by a win — and a scoring rule that ignores that
-  rewards confident nonsense.</p>
-
-  <div class="scroll"><table><thead><tr><th>Competition</th><th class=num>Forecasts</th><th class=num>RPS</th><th class=num>vs base rate</th></tr></thead><tbody><tr><td>Portugal, Primeira Liga</td><td class=num>1,602</td><td class=num>0.1855</td><td class=num>+19.83%</td></tr><tr><td>Netherlands, Eredivisie</td><td class=num>1,555</td><td class=num>0.1938</td><td class=num>+16.49%</td></tr><tr><td>Italy, Serie A</td><td class=num>2,950</td><td class=num>0.1968</td><td class=num>+14.57%</td></tr><tr><td>England, Premier League</td><td class=num>2,960</td><td class=num>0.2021</td><td class=num>+13.42%</td></tr><tr><td>Germany, Bundesliga</td><td class=num>2,376</td><td class=num>0.2047</td><td class=num>+11.68%</td></tr><tr><td>Spain, La Liga</td><td class=num>2,961</td><td class=num>0.1985</td><td class=num>+11.50%</td></tr><tr><td>France, Ligue 1</td><td class=num>2,751</td><td class=num>0.2089</td><td class=num>+9.54%</td></tr><tr><td>England, Championship</td><td class=num>3,599</td><td class=num>0.2213</td><td class=num>+3.59%</td></tr><tr><td>All leagues pooled</td><td class=num>20,754</td><td class=num>0.2035</td><td class=num>+11.69%</td></tr></tbody></table></div>
-
-  <h2>Where it does not work</h2>
-
-  <p>Top divisions gain <strong>+12.65%</strong> over the base rate. Second
-  tiers and below gain <strong>+3.03%</strong>. England's League Two gains
-  <strong>+0.89%</strong>, which is no practical edge at all.</p>
-
-  <p>The reason is not mysterious: lower divisions have more squad churn,
-  thinner and noisier data, and results that are genuinely closer to a coin
-  toss. The model does not know more about League Two than League Two knows
-  about itself.</p>
-
-  <p class="note">The higher figure is only ever quoted with its leagues
-  attached. A site advertising <em class="term">+11.7%</em> without saying which
-  competitions produced it would be describing a different product from the one
-  that arrives in the inbox.</p>
-
-  <h2>Against the consensus</h2>
-
-  <p>Where it can be checked, the model agrees with the consensus price almost
-  everywhere — Liverpool at 65% against a de-vigged 64.5%. That agreement is
-  reassuring rather than disappointing: a model that disagreed wildly with a
-  liquid consensus would far more likely be broken than brilliant.</p>
-
-  <p>So a large gap between this model and the consensus is treated as a
-  probable <strong>blind spot in the model</strong>, and investigated as one.
-  It is not treated as a discovery.</p>
-
-  <h2>Scored every day, in public</h2>
-
-  <p>Yesterday's forecasts are settled against yesterday's results before
-  today's are made, and the running record is part of the daily email — the days
-  it was wrong included. A forecasting project that reports only its good weeks
-  is not reporting.</p>
-
+<header><a class="brand" href="index.html" aria-label="Sharper Side home">
+<svg width="30" height="30" viewBox="0 0 64 64" style="opacity:1.0;display:block;"><path d="M4,12 L24,32 L4,52 Z" fill="#6B7478"/><path d="M30,20 L62,32 L30,44 Z" fill="#50B686"/></svg>Sharper Side</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">Overview</a><a href="method.html">Our approach</a><a href="results.html" aria-current="page">Our record</a><a href="support.html">Help</a><a href="unsubscribe.html">Unsubscribe</a></nav></header>
+<main>
+<article class="article"><p class="eyebrow">Our record</p><h1>The results belong beside the analysis.</h1><p class="lead">An honest record includes where the reading helped and where it fell short.</p><section class="figs"><div class="fig"><div class="fig-v">+11.7%</div><div class="fig-l">on RPS, eight leagues</div><div class="fig-c">20,754 out-of-sample forecasts across seven top divisions and the Championship. This is the flattering figure.</div></div><div class="fig"><div class="fig-v">+3.03%</div><div class="fig-l">second tiers and below</div><div class="fig-c">The same model, the same method, on lower divisions. t = 7.50, p = 1.3e-06 — the difference is real, not noise.</div></div></section><h2>Published historical evaluation</h2><p>The table below preserves the figures previously published on Sharper Side. It summarises a historical evaluation, not a live list of subscriber results.</p><p>RPS measures the quality of the probabilities assigned to match outcomes; lower is better. The last column compares that score with the competition's usual result frequencies. These figures are not a win rate or a financial return.</p><div class="scroll"><table><thead><tr><th>Competition</th><th class=num>Forecasts</th><th class=num>RPS</th><th class=num>vs base rate</th></tr></thead><tbody><tr><td>Portugal, Primeira Liga</td><td class=num>1,602</td><td class=num>0.1855</td><td class=num>+19.83%</td></tr><tr><td>Netherlands, Eredivisie</td><td class=num>1,555</td><td class=num>0.1938</td><td class=num>+16.49%</td></tr><tr><td>Italy, Serie A</td><td class=num>2,950</td><td class=num>0.1968</td><td class=num>+14.57%</td></tr><tr><td>England, Premier League</td><td class=num>2,960</td><td class=num>0.2021</td><td class=num>+13.42%</td></tr><tr><td>Germany, Bundesliga</td><td class=num>2,376</td><td class=num>0.2047</td><td class=num>+11.68%</td></tr><tr><td>Spain, La Liga</td><td class=num>2,961</td><td class=num>0.1985</td><td class=num>+11.50%</td></tr><tr><td>France, Ligue 1</td><td class=num>2,751</td><td class=num>0.2089</td><td class=num>+9.54%</td></tr><tr><td>England, Championship</td><td class=num>3,599</td><td class=num>0.2213</td><td class=num>+3.59%</td></tr><tr><td>All leagues pooled</td><td class=num>20,754</td><td class=num>0.2035</td><td class=num>+11.69%</td></tr></tbody></table></div><h2>Coverage makes a difference</h2><p>The published evaluation reports a much smaller improvement in lower divisions: 3.03% for second tiers and below, and 0.89% for England's League Two. Results in one group of leagues should not be presented as results for every competition.</p><h2>The daily record</h2><p>The daily email includes the previous day's readings reviewed against the results, including the misses. Historical performance does not guarantee future match outcomes.</p></article>
 </main>
-
-  <footer>
-    <div class="links">
-      <a href="method.html">Method</a><a href="data.html">Data</a>
-      <a href="results.html">What it scores</a><a href="support.html">Support</a>
-    </div>
-    <strong>Disclaimer.</strong> Sharper Side is statistical analysis of
-    football fixtures, published for information only. It is not advice of any
-    kind and nothing in it is a recommendation to act, financially or
-    otherwise. Football is uncertain and no forecast here is a statement about
-    what will happen. No responsibility is accepted for any decision taken on
-    the basis of this analysis, or for any loss arising from one.
-  </footer>
+<aside class="notice"><h3>Analysis, not advice.</h3><p>Sharper Side is statistical analysis of football fixtures, published for information only. It is not advice of any kind and nothing in it is a recommendation to act, financially or otherwise. Football is uncertain, and no forecast here is a statement about what will happen.</p></aside>
+<footer><div class="footer-row"><span>Sharper Side<br><span class="serif">The match, read honestly.</span></span><div class="footer-links"><a href="data.html">Coverage &amp; sources</a><a href="support.html">Help &amp; contact</a><a href="unsubscribe.html">Unsubscribe / cancel</a></div></div><p>Daily delivery: <span data-delivery>8 am BST / 7 am GMT, London time</span>. London time adjusts with the clocks.</p><p>© 2026 Sharper Side · Football analysis for information only.</p></footer>
 </div>
+<script>document.querySelectorAll('[data-delivery]').forEach(function(el){var d=new Date(),u=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),7));el.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'numeric',minute:'2-digit',hour12:true}).format(u)+' London time';});</script>
 </body>
 </html>
